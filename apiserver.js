@@ -51,6 +51,15 @@ async function startServer() {
       res.send(locations);
     });
 
+    app.get('/find/:id', async (req, res) => {
+      const id = req.params.id;
+      const filter = {};
+      filter._id = new ObjectId(id);
+      const locations = await locationsCollection.find(filter).toArray();
+      console.log("Data fetched: "+ JSON.stringify(locations));
+      res.send(locations);
+    });
+    
     // api to upload data to the cloud
     app.post('/post_static_location_data', async (req, res) => {
     var dataArray = [];
